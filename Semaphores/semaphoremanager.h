@@ -11,41 +11,34 @@
 #define GREEN_TIME 10
 #define ORANGE_TIME 3
 
-#define RED_STATE 0
-#define RED_ORANGE_STATE 1
-#define GREEN_STATE 2
-#define ORANGE_STATE 3
-#define OFF_STATE 4
-#define OFF_ORANGE_STATE 5
-
 class SemaphoreManager : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(int state WRITE setState READ state NOTIFY stateChanged)
-    Q_PROPERTY(int state READ state)
     Q_PROPERTY(int timeElapsed READ timeElapsed NOTIFY isTimeElapsedChange)
     Q_PROPERTY(bool isSemaphoreOn WRITE setIsSemaphoreOn READ isSemaphoreOn NOTIFY isSemaphoreOnChange)
 public:
-    explicit SemaphoreManager(QObject *parent = nullptr);
+    explicit SemaphoreManager(QObject* parent = nullptr);
 
-    /*enum SemaphoreStates {
-        RED_STATE,
+    enum SemaphoreStates {
+        RED_STATE = 0,
         RED_ORANGE_STATE,
         GREEN_STATE,
         ORANGE_STATE,
-        OFF_STATE
+        OFF_STATE,
+        OFF_ORANGE_STATE
     };
-    Q_ENUM(SemaphoreStates);*/
+    Q_ENUM(SemaphoreStates);
 
     QTimer* m_timerSemaphore = nullptr;
 
-    void setState(const int &state);
+    void setState(int const& state);
     int state() const;
 
     int timeElapsed() const;
 
-    void setIsSemaphoreOn(const bool isSemaphoreOn);
+    void setIsSemaphoreOn(bool const isSemaphoreOn);
     bool isSemaphoreOn() const;
 
 signals:

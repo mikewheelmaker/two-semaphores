@@ -11,7 +11,7 @@ SemaphoreManager::SemaphoreManager(QObject *parent) : QObject(parent)
     m_isSemaphoreOn = false;
 }
 
-void SemaphoreManager::setState(const int &state)
+void SemaphoreManager::setState(int const& state)
 {
     if(m_state == state)
     {
@@ -31,7 +31,7 @@ int SemaphoreManager::timeElapsed() const
     return this->m_timeElapsed;
 }
 
-void SemaphoreManager::setIsSemaphoreOn(const bool isSemaphoreOn)
+void SemaphoreManager::setIsSemaphoreOn(bool const isSemaphoreOn)
 {
     if(m_isSemaphoreOn == isSemaphoreOn)
     {
@@ -49,7 +49,6 @@ bool SemaphoreManager::isSemaphoreOn() const
 void SemaphoreManager::onTimerTrigger()
 {
     m_timeElapsed += 1;
-    emit isTimeElapsedChange();
     if(m_state == RED_STATE && m_timeElapsed == RED_TIME && m_isSemaphoreOn == true)
     {
         setState(RED_ORANGE_STATE);
@@ -86,6 +85,7 @@ void SemaphoreManager::onTimerTrigger()
         m_timeElapsed = 0;
         qDebug() << "Case 4 OFF";
     }
+    emit isTimeElapsedChange();
 }
 
 void SemaphoreManager::onIsSemaphoreOnChange(bool isSemaphoreOnChange)

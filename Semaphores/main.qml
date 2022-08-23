@@ -1,8 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
-import QtQml 2.12
+import QtQuick 2.15
+import QtQuick.Window 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtQml 2.15
 
 ApplicationWindow {
     id: mainWindow
@@ -14,20 +14,19 @@ ApplicationWindow {
 
     Connections {
         target: semaphoreManager
-        onStateChanged: updateSemaphore(state)
-    }
 
-    function updateSemaphore (state)
-    {
-        if(state <= 3)
+        function onStateChanged(state)
         {
-            leftSemaphore.changeColorsFromState(state)
-            rightSemaphore.changeColorsFromState((state + 2) % 4)
-        }
-        else
-        {
-            leftSemaphore.changeColorsFromState(state)
-            rightSemaphore.changeColorsFromState(state)
+            if(state <= 3)
+            {
+                leftSemaphore.changeColorsFromState(state)
+                rightSemaphore.changeColorsFromState((state + 2) % 4)
+            }
+            else
+            {
+                leftSemaphore.changeColorsFromState(state)
+                rightSemaphore.changeColorsFromState(state)
+            }
         }
     }
 
