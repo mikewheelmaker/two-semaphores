@@ -2,6 +2,7 @@
 Two Semaphores Example Project in QtCreator using Qt 5 and C++.
 
 This project is a very basic and simple example of what you can do using the Qt Framework and C++.
+It simulates two semaphores and allows you to see the C++ and QML code that makes it go.
 
 Very useful for teachers and students of C++ and QML, as it offers an easy and approachable first glimpse into the Qt Framework, which can appear very complex in the beginning.
 
