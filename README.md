@@ -1,4 +1,4 @@
-# Two Semaphore
+# Two Semaphores
 Two Semaphores Example Project in QtCreator using Qt 5 and C++.
 
 This project is a very basic and simple example of what you can do using the Qt Framework and C++.
