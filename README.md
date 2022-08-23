@@ -10,6 +10,6 @@ Even though Qt is large and offers a lot of functionalities, the project scope i
 
 For a quick look, I have created [installers](https://github.com/mikewheelmaker/twosemaphoresexample/releases) for Windows, both for 32 and 64 bit architectures.
 
-At the moment, there is no documentation or wiki available for this project, but the [Qt official documentation](https://doc.qt.io/qt-5.15/) and the [Qt forum](https://forum.qt.io/) are good as well.
+At the moment, there is no documentation or wiki available for this project, but the [Qt official documentation](https://doc.qt.io/qt-5.15/) and the [Qt forum](https://forum.qt.io/) are good as well. A wiki is under construction for the time being.
 
 The current maintainer and contributor for the project is [@mikewheelmaker](https://github.com/mikewheelmaker)
