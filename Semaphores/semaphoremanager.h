@@ -16,44 +16,56 @@ class SemaphoreManager : public QObject
     Q_OBJECT
 
     Q_PROPERTY(int state WRITE setState READ state NOTIFY stateChanged)
-    Q_PROPERTY(int timeElapsed READ timeElapsed NOTIFY isTimeElapsedChange)
-    Q_PROPERTY(bool isSemaphoreOn WRITE setIsSemaphoreOn READ isSemaphoreOn NOTIFY isSemaphoreOnChange)
+    Q_PROPERTY(int timeElapsed READ timeElapsed NOTIFY isTimeElapsedChanged)
+    Q_PROPERTY(bool isSemaphoreOn WRITE setIsSemaphoreOn READ isSemaphoreOn NOTIFY isSemaphoreOnChanged)
+    Q_PROPERTY(bool syncedOnState WRITE setSyncedOnState READ syncedOnState NOTIFY syncedOnStateChanged)
+    Q_PROPERTY(bool syncedOffState WRITE setSyncedOffState READ syncedOffState NOTIFY syncedOffStateChanged)
 public:
     explicit SemaphoreManager(QObject* parent = nullptr);
 
-    enum SemaphoreStates {
+    enum SemaphoreState {
         RED_STATE = 0,
         RED_ORANGE_STATE,
         GREEN_STATE,
         ORANGE_STATE,
-        OFF_STATE,
-        OFF_ORANGE_STATE
+        OFF_OFF_STATE,
+        ORANGE_OFF_STATE
     };
-    Q_ENUM(SemaphoreStates);
+    Q_ENUM(SemaphoreState);
 
     QTimer* m_timerSemaphore = nullptr;
 
-    void setState(int const& state);
+    void setState(const int & state);
     int state() const;
 
     int timeElapsed() const;
 
-    void setIsSemaphoreOn(bool const isSemaphoreOn);
+    void setIsSemaphoreOn(const bool isSemaphoreOn);
     bool isSemaphoreOn() const;
+
+    void setSyncedOnState(const bool syncedOnState);
+    bool syncedOnState() const;
+
+    void setSyncedOffState(const bool syncedOffState);
+    bool syncedOffState() const;
 
 signals:
     void stateChanged(int state);
-    void isTimeElapsedChange();
-    void isSemaphoreOnChange(bool isSemaphoreOn);
+    void isTimeElapsedChanged();
+    void isSemaphoreOnChanged(bool isSemaphoreOn);
+    void syncedOnStateChanged(bool syncedOnState);
+    void syncedOffStateChanged(bool syncedOffState);
 
 private:
     int m_state;
     int m_timeElapsed;
     bool m_isSemaphoreOn;
+    bool m_syncedOnState;
+    bool m_syncedOffState;
 
 private slots:
     void onTimerTrigger();
-    void onIsSemaphoreOnChange(bool isSemaphoreOnChange);
+    void onIsSemaphoreOnChanged(bool isSemaphoreOn);
 };
 
 #endif // SEMAPHOREMANAGER_H

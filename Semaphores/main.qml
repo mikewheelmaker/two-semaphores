@@ -1,16 +1,16 @@
-import QtQuick 2.15
-import QtQuick.Window 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
-import QtQml 2.15
+import QtQuick
+import QtQuick.Window
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQml
 
 ApplicationWindow {
     id: mainWindow
 
-    width: 900
     height: 900
+    width: 700
     visible: true
-    title: qsTr("Semaphores Project")
+    title: qsTr("Two Semaphores Project")
 
     Connections {
         target: semaphoreManager
@@ -19,13 +19,29 @@ ApplicationWindow {
         {
             if(state <= 3)
             {
-                leftSemaphore.changeColorsFromState(state)
-                rightSemaphore.changeColorsFromState((state + 2) % 4)
+                if(semaphoreManager.syncedOnState === false)
+                {
+                    leftSemaphore.changeColorsFromState(state)
+                    rightSemaphore.changeColorsFromState((state + 2) % 4)
+                }
+                else
+                {
+                    leftSemaphore.changeColorsFromState(state)
+                    rightSemaphore.changeColorsFromState(state)
+                }
             }
             else
             {
-                leftSemaphore.changeColorsFromState(state)
-                rightSemaphore.changeColorsFromState(state)
+                if(semaphoreManager.syncedOffState === false)
+                {
+                    leftSemaphore.changeColorsFromState(((state + 1) % 2) + 4)
+                    rightSemaphore.changeColorsFromState((state % 2) + 4)
+                }
+                else
+                {
+                    leftSemaphore.changeColorsFromState(state)
+                    rightSemaphore.changeColorsFromState(state)
+                }
             }
         }
     }
@@ -43,8 +59,8 @@ ApplicationWindow {
             Layout.alignment: Qt.AlignCenter
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            Layout.preferredWidth: 100
+            Layout.preferredHeight: 900
+            Layout.preferredWidth: 300
         }
 
         //centreConsole
@@ -55,7 +71,7 @@ ApplicationWindow {
             Layout.alignment: Qt.AlignCenter
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.preferredHeight: 100
+            Layout.preferredHeight: 900
             Layout.preferredWidth: 100
 
             ColumnLayout {
@@ -70,17 +86,16 @@ ApplicationWindow {
                     text: "Start"
                     Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
                     onClicked: {
-                        leftSemaphore.changeColorsFromState(0)
-                        rightSemaphore.changeColorsFromState(2)
+                        if(semaphoreManager.syncedOnState === true) {
+                            leftSemaphore.changeColorsFromState(0)
+                            rightSemaphore.changeColorsFromState(0)
+                        }
+                        else {
+                            leftSemaphore.changeColorsFromState(0)
+                            rightSemaphore.changeColorsFromState(2)
+                        }
                         semaphoreManager.isSemaphoreOn = true
                     }
-                }
-
-                Text {
-                    id: timeElapsed
-
-                    Layout.alignment: Qt.AlignCenter
-                    text: semaphoreManager.timeElapsed
                 }
 
                 Button {
@@ -89,9 +104,65 @@ ApplicationWindow {
                     text: "Stop"
                     Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
                     onClicked: {
-                        leftSemaphore.changeColorsFromState(4)
-                        rightSemaphore.changeColorsFromState(4)
+                        if(semaphoreManager.syncedOffState === true) {
+                            leftSemaphore.changeColorsFromState(4)
+                            rightSemaphore.changeColorsFromState(4)
+                        }
+                        else {
+                            leftSemaphore.changeColorsFromState(4)
+                            rightSemaphore.changeColorsFromState(5)
+                        }
                         semaphoreManager.isSemaphoreOn = false
+                    }
+                }
+
+                Text {
+                    id: timeElapsed
+
+                    Layout.alignment: Qt.AlignCenter
+                    text: {
+                        if(semaphoreManager.isSemaphoreOn === true) {
+                            semaphoreManager.timeElapsed + 1
+                        }
+                        else {
+                            ""
+                        }
+                    }
+                }
+
+                Button {
+                    id: alternateOnStateButton
+
+                    text: {
+                        if(semaphoreManager.syncedOnState === true) {
+                            "Unsync On State"
+                        }
+                        else {
+                            "Sync On State"
+                        }
+                    }
+
+                    Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
+                    onClicked: {
+                        semaphoreManager.syncedOnState = !semaphoreManager.syncedOnState
+                    }
+                }
+
+                Button {
+                    id: alternateOffStateButton
+
+                    text: {
+                        if(semaphoreManager.syncedOffState === true) {
+                            "Unsync Off State"
+                        }
+                        else {
+                            "Sync Off State"
+                        }
+                    }
+
+                    Layout.alignment: Qt.AlignTop | Qt.AlignHCenter
+                    onClicked: {
+                        semaphoreManager.syncedOffState = !semaphoreManager.syncedOffState
                     }
                 }
             }
@@ -104,8 +175,8 @@ ApplicationWindow {
             Layout.alignment: Qt.AlignCenter
             Layout.fillHeight: true
             Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            Layout.preferredWidth: 100
+            Layout.preferredHeight: 900
+            Layout.preferredWidth: 300
         }
     }
 }

@@ -1,12 +1,12 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.15
-import QtQml 2.15
+import QtQuick
+import QtQuick.Layouts
+import QtQml
 
 Item {
     id: root
 
+    height: 300
     width: 100
-    height: 100
 
     Rectangle {
         id: backgroundRectangle
@@ -65,31 +65,37 @@ Item {
     {
         switch(state)
         {
+        // RED_STATE
         case 0:
             redLight.color = "red"
             orangeLight.color = "gray"
             greenLight.color = "gray"
             break;
+        // RED_ORANGE_STATE
         case 1:
             redLight.color = "red"
             orangeLight.color = "orange"
             greenLight.color = "gray"
             break;
+        // GREEN_STATE
         case 2:
             redLight.color = "gray"
             orangeLight.color = "gray"
             greenLight.color = "green"
             break;
+        // ORANGE_STATE
         case 3:
             redLight.color = "gray"
             orangeLight.color = "orange"
             greenLight.color = "gray"
             break;
+        // OFF_OFF_STATE
         case 4:
             redLight.color = "gray"
             orangeLight.color = "gray"
             greenLight.color = "gray"
             break;
+        // ORANGE_OFF_STATE
         case 5:
             redLight.color = "gray"
             orangeLight.color = "orange"
